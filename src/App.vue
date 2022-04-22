@@ -1,20 +1,68 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="container mx-auto bg-gray-100 p-24">
+        <div class="inline">
+            <Button text="Add / Save" @click="saveTask" />
+            <Button text="Edit" @click="editTask" />
+        </div>
+  <TaskInput v-if="editMode" :tasks="tasks" :newTask="newTask" @add-newTask="saveNewTask" />
+  <TaskList v-else :tasks="tasks" />
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import TaskInput from './components/TaskInput.vue'
+import TaskList from './components/TaskList.vue'
+import Button from './components/Button.vue'
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Button,
+    TaskList,
+    TaskInput
+  },
+  data() {
+    return {
+      tasks:[],
+      newTask: {},
+      editMode: true
+    }
+  },
+  methods: {
+    saveTask() {
+      if(Object.values(this.newTask).length !== 0 && this.newTask.constructor === Object) {
+        this.tasks.push(this.newTask)
+        this.newTask = {}
+      }
+        this.editMode = false    
+    },
+    saveNewTask() {
+        this.tasks.push(this.newTask)
+        this.newTask = {}
+    },
+    editTask() {
+      this.editMode = true
+    }
+  },
+  created() {
+    this.tasks = [
+      {
+        text: 'This is first task'
+      },
+      {
+        text: 'Second task on the list'
+      },
+      {
+        text: 'Third lucky guess'
+      }
+    ]
   }
 }
 </script>
 
 <style>
+body {
+  background-color: rgb(243 244 246);
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -22,5 +70,6 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  background-color: rgb(243 244 246);
 }
 </style>
