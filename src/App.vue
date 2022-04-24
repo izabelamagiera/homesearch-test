@@ -56,7 +56,6 @@ export default {
     saveTask() {
       if(Object.values(this.newTask).length !== 0 && this.newTask.constructor === Object) {
         this.tasks.push(this.newTask)
-        this.tasks = JSON.parse(localStorage.getItem('tasks'));
         this.newTask = {}
       }
         this.editMode = false    
