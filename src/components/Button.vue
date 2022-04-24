@@ -1,5 +1,5 @@
 <template>
-        <button class="bg-gray-300 py-2 px-8 mx-2 hover:bg-blue-100">{{ text }}</button>
+        <button class="bg-emerald-50 py-2 px-8 mx-2 hover:bg-white">{{ text }}</button>
 </template>
 
 <script>

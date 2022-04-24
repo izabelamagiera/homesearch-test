@@ -27,23 +27,15 @@ export default {
       editMode: true
     }
   },
-  methods: {
-    saveTask() {
-      if(Object.values(this.newTask).length !== 0 && this.newTask.constructor === Object) {
-        this.tasks.push(this.newTask)
-        this.newTask = {}
-      }
-        this.editMode = false    
-    },
-    saveNewTask() {
-        this.tasks.push(this.newTask)
-        this.newTask = {}
-    },
-    editTask() {
-      this.editMode = true
+  watch: {
+    tasks: {
+      handler() {
+        localStorage.setItem('tasks', JSON.stringify(this.tasks))
+      },
+      deep: true
     }
   },
-  created() {
+  mounted() {
     this.tasks = [
       {
         text: 'This is first task'
@@ -55,7 +47,32 @@ export default {
         text: 'Third lucky guess'
       }
     ]
+    if (localStorage.getItem("tasks")){
+    this.tasks = JSON.parse(localStorage.getItem("tasks"))
   }
+    
+  },
+  methods: {
+    saveTask() {
+      if(Object.values(this.newTask).length !== 0 && this.newTask.constructor === Object) {
+        this.tasks.push(this.newTask)
+        this.tasks = JSON.parse(localStorage.getItem('tasks'));
+        this.newTask = {}
+      }
+        this.editMode = false    
+    },
+    saveNewTask() {
+      if(Object.values(this.newTask).length !== 0 && this.newTask.constructor === Object) {
+        this.tasks.push(this.newTask)
+        this.newTask = {}
+      }
+    },
+    editTask() {
+      this.editMode = true
+    }
+  },
+  created() {
+  },
 }
 </script>
 
